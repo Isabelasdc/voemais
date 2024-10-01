@@ -2,21 +2,34 @@
 
 import Pagina from "@/app/components/Pagina"
 import Link from "next/link"
-import { Table } from "react-bootstrap"
+import { Button, Table } from "react-bootstrap"
 import { FaPlusCircle } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
+import { useEffect } from "react";
+import { useState } from "react";
+
+
 
 export default function Page() {
 
-    const empresas = JSON.parse(localStorage.getItem('empresas')) || []
-    // let empresas = localStorage.getItem('empresas')
+    const [empresas, setEmpresas] = useState([])
 
-    // if(empresas){
-    //     empresas = JSON.parse(empresas)
+    useEffect(() => {
+        setEmpresas(JSON.parse(localStorage.getItem('empresas')) || [])
+    }, [])
+    
+    
+    function excluir(id){
+        if(confirm('Deseja realmente excluir o registro?')){
 
-       
-    // } else {
-    //     empresas = []
-    // }
+            const dados = empresas.filter(item=>item.id  != id)
+            localStorage.setItem('empresas' , JSON.stringify(dados))
+            setEmpresas(dados)
+            
+        }
+
+    }
 
     return (
         <Pagina titulo="Empresas">
@@ -35,16 +48,26 @@ export default function Page() {
                     </tr>
                 </thead>
                 <tbody>
-                    {empresas.map(item => (
-                        <tr>
-                            <td>1</td>
+                    {empresas.map((item, i) => (
+                        <tr key={item.id}>
+                            <td>
+                                <Link href={`/empresas/edit/${item.id}`}>
+                                <FaRegEdit className="text-primary" />
+                                </Link>
+                                <MdDelete 
+                                title="Excluir" 
+                                className="text-danger" 
+                                onClick={()=>excluir(item.id)}
+                                />
+                            </td>
+
                             <td>{item.nome}</td>
                             <td>
                                 <a href={item.site} target="blanck">
-                                <img src={item.logo}  width={100}/>
+                                    <img src={item.logo} width={100} />
                                 </a>
-                                </td>
-                           
+                            </td>
+
 
                         </tr>
                     ))}
