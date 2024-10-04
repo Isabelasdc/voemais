@@ -4,6 +4,8 @@ import Pagina from "@/app/components/Pagina"
 import { Formik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useState } from "react";
 import { Button, Form } from "react-bootstrap"
 import { FaCheck } from "react-icons/fa";
 import { MdArrowBack } from "react-icons/md";
@@ -11,24 +13,35 @@ import { v4 } from "uuid";
 
 
 
-export default function Page() {
+export default function Page({params}) {
 
-    const route = useRouter()
+    const route = useRouter()  
 
+    const empresas = JSON.parse(localStorage.getItem('empresas')) || []
+    const dados = empresas.find(item=>item.id == params.id)
+    const empresa = dados || { nome: '', logo: '', site: ''}
+
+       
     function salvar(dados){
-        const empresas = JSON.parse(localStorage.getItem('empresas')) || []
 
-        dados.id = v4()
-        empresas.push(dados)
+        if(empresa.id){
+            Object.assign(empresa, dados)  
+        } else {
+            dados.id = v4()
+            empresas.push(dados)
+        }
+
         localStorage.setItem('empresas' , JSON.stringify(empresas))
         return route.push('/empresas')
-    }
+
+       
+    } 
 
 
     return (
         <Pagina titulo="Empresa">
             <Formik
-                initialValues={{ nome: '', logo: '', site: ''}}
+                initialValues={empresa}
                 onSubmit={values=>salvar(values)}
             >
                 {({

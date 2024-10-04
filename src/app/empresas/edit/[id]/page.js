@@ -15,25 +15,23 @@ import { v4 } from "uuid";
 
 export default function Page({params}) {
 
-    const route = useRouter()
+    const route = useRouter()  
 
-    const [empresa, setEmpresa] = useState({ nome: '', logo: '', site: ''})
+    const empresas = JSON.parse(localStorage.getItem('empresas')) || []
+    const dados = empresas.find(item=>item.id == params.id)
+    const empresa = dados || { nome: '', logo: '', site: ''}
 
-    useEffect(() => {
-
-        const empresas = JSON.parse(localStorage.getItem('empresas')) || []
-        const dados = empresa.find(item=>item.id == params.id)
-        setEmpresa(dados)
-
-    }, [])
-
+       
     function salvar(dados){
-        const empresas = JSON.parse(localStorage.getItem('empresas')) || []
 
-        dados.id = v4()
-        empresas.push(dados)
+        Object.assign(empresa, dados)
         localStorage.setItem('empresas' , JSON.stringify(empresas))
         return route.push('/empresas')
+
+        // const empresas = JSON.parse(localStorage.getItem('empresas')) || []
+        // dados.id = v4()
+        // empresas.push(dados)
+       
     }
 
 
