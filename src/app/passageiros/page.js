@@ -4,24 +4,31 @@ import Pagina from "@/app/components/Pagina"
 import Link from "next/link"
 import { Table } from "react-bootstrap"
 import { FaPlusCircle } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 export default function Page() {
+    const [passageiros, setPassageiros] = useState([])
 
-    const passageiro = JSON.parse(localStorage.getItem('passageiro')) || []
-    // let empresas = localStorage.getItem('empresas')
+    useEffect(() => {
+        setPassageiros(JSON.parse(localStorage.getItem('passageiros')) || [])
+    }, [])
+    
+    
+    function excluir(id){
+        if(confirm('Deseja realmente excluir o registro?')){
 
-    // if(empresas){
-    //     empresas = JSON.parse(empresas)
-
-       
-    // } else {
-    //     empresas = []
-    // }
-
+            const dados = passageiros.filter(item=>item.id  != id)
+            localStorage.setItem('passageiros' , JSON.stringify(dados))
+            setAeroportos(dados)
+            
+        }
+    }
     return (
         <Pagina titulo="Passageiros">
             <Link
-                href="/passageiros/create"
+                href="/passageiros/form"
                 className="btn btn-primary mb-3"
             >
                 <FaPlusCircle /> Novo
@@ -40,9 +47,18 @@ export default function Page() {
                     </tr>
                 </thead>
                 <tbody>
-                    {passageiro.map(item => (
-                        <tr>
-                            <td>1</td>
+                    {passageiros.map(item => (
+                        <tr key={item.id}>
+                        <td>
+                          <Link href={`/passageiros/form/${item.id}`}>
+                          <FaRegEdit className="text-primary" />
+                          </Link>
+                          <MdDelete 
+                          title="Excluir" 
+                          className="text-danger" 
+                          onClick={()=>excluir(item.id)}
+                          />
+                      </td>
                             <td>{item.nome}</td>
                             <td>{item.tipo}</td>
                             <td>{item.documento}</td>

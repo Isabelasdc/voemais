@@ -4,24 +4,33 @@ import Pagina from "@/app/components/Pagina"
 import Link from "next/link"
 import { Table } from "react-bootstrap"
 import { FaPlusCircle } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 export default function Page() {
 
-    const passagem = JSON.parse(localStorage.getItem('passagem')) || []
-    // let empresas = localStorage.getItem('empresas')
+    const [passagens, setPassagens] = useState([])
 
-    // if(empresas){
-    //     empresas = JSON.parse(empresas)
+    useEffect(() => {
+        setPassagens(JSON.parse(localStorage.getItem('passagens')) || [])
+    }, [])
+    
+    
+    function excluir(id){
+        if(confirm('Deseja realmente excluir o registro?')){
 
-       
-    // } else {
-    //     empresas = []
-    // }
+            const dados = passagens.filter(item=>item.id  != id)
+            localStorage.setItem('passagens' , JSON.stringify(dados))
+            setPassagens(dados)
+            
+        }
+    }
 
     return (
         <Pagina titulo="Passagens">
             <Link
-                href="/passagem/create"
+                href="/passagem/form"
                 className="btn btn-primary mb-3"
             >
                 <FaPlusCircle /> Novo
@@ -38,9 +47,18 @@ export default function Page() {
                     </tr>
                 </thead>
                 <tbody>
-                    {passagem.map(item => (
-                        <tr>
-                            <td>1</td>
+                    {passagens.map(item => (
+                        <tr key={item.id}>
+                        <td>
+                          <Link href={`/passagem/form/${item.id}`}>
+                          <FaRegEdit className="text-primary" />
+                          </Link>
+                          <MdDelete 
+                          title="Excluir" 
+                          className="text-danger" 
+                          onClick={()=>excluir(item.id)}
+                          />
+                      </td>
                             <td>{item.voo}</td>
                             <td>{item.passageiro}</td>
                             <td>{item.assento}</td>

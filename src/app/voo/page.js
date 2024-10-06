@@ -4,24 +4,33 @@ import Pagina from "@/app/components/Pagina"
 import Link from "next/link"
 import { Table } from "react-bootstrap"
 import { FaPlusCircle } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 export default function Page() {
 
-    const voo = JSON.parse(localStorage.getItem('voo')) || []
-    // let empresas = localStorage.getItem('empresas')
+    const [voos, setVoos] = useState([])
 
-    // if(empresas){
-    //     empresas = JSON.parse(empresas)
+    useEffect(() => {
+        setVoos(JSON.parse(localStorage.getItem('voos')) || [])
+    }, [])
 
-       
-    // } else {
-    //     empresas = []
-    // }
+
+    function excluir(id) {
+        if (confirm('Deseja realmente excluir o registro?')) {
+
+            const dados = voos.filter(item => item.id != id)
+            localStorage.setItem('voos', JSON.stringify(dados))
+            setVoos(dados)
+
+        }
+    }
 
     return (
         <Pagina titulo="Voo">
             <Link
-                href="/Voo/create"
+                href="/voo/form"
                 className="btn btn-primary mb-3"
             >
                 <FaPlusCircle /> Novo
@@ -42,9 +51,19 @@ export default function Page() {
                     </tr>
                 </thead>
                 <tbody>
-                    {voo.map(item => (
-                        <tr>
-                            <td>1</td>
+                    {voos.map(item => (
+
+                        <tr key={item.id}>
+                            <td>
+                                <Link href={`/voo/form/${item.id}`}>
+                                    <FaRegEdit className="text-primary" />
+                                </Link>
+                                <MdDelete
+                                    title="Excluir"
+                                    className="text-danger"
+                                    onClick={() => excluir(item.id)}
+                                />
+                            </td>
                             <td>{item.internacional}</td>
                             <td>{item.identificador}</td>
                             <td>{item.checkin}</td>
