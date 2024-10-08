@@ -64,7 +64,7 @@ export default function Page() {
                             <td>{item.sigla}</td>
                             <td>{item.uf}</td>
                             <td>{item.cidade}</td>
-                            <td>{item.País}</td>
+                            <td>{item.pais}</td>
 
                         </tr>
                     ))}

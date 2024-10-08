@@ -49,7 +49,7 @@ export default function Page({ params }) {
                             type="text" 
                             name="voo"
                             value={values.voo}
-                            onChange={handleChange}
+                            onChange={handleChange('voo')}
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="passageiro">
