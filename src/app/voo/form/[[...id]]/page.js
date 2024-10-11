@@ -1,9 +1,12 @@
+
+
 'use client'
 
 import Pagina from "@/app/components/Pagina"
 import { Formik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap"
 import { FaCheck } from "react-icons/fa";
 import { MdArrowBack } from "react-icons/md";
@@ -16,6 +19,17 @@ export default function Page({ params }) {
     const voos = JSON.parse(localStorage.getItem('voos')) || []; 
     const dados = voos.find(item => item.id == params.id); 
     const voo = dados || { internacional: '', identificador: '', checkin: '' , embarque: '' , origem: '' , destino: '' , empresa: '' , preco: ''}; 
+
+    const [empresas, setEmpresas] = useState([])
+    const [aeroportos, setAeroportos] = useState([])
+
+
+    
+    useEffect(() => {
+        setEmpresas(JSON.parse(localStorage.getItem('empresas')) || [])
+        setAeroportos(JSON.parse(localStorage.getItem('aeroportos')) || [])
+
+    }, [])
 
     function salvar(dados) {
         if (voo.id) {
@@ -80,31 +94,43 @@ export default function Page({ params }) {
                              />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="origem">
-                            <Form.Label>Origem</Form.Label>
-                            <Form.Control 
-                            type="text" 
-                            name="origem"
-                            value={values.origem}
-                            onChange={handleChange('origem')}
-                             />
+                        <Form.Label>Origem</Form.Label>
+                        <Form.Select
+                                    name="origem"
+                                    value={values.origem}
+                                    onChange={handleChange('origem')}
+                                >
+                                    <option value=''>Selecione</option>
+                                    {aeroportos.map(item => (
+                                        <option key={item.sigla} value={item.sigla}>{item.nome}</option>
+                                    ))}
+                                </Form.Select>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="destino">
                             <Form.Label>Destino</Form.Label>
-                            <Form.Control 
-                            type="text" 
-                            name="destino"
-                            value={values.destino}
-                            onChange={handleChange('destino')}
-                             />
+                            <Form.Select
+                                    name="destino"
+                                    value={values.destino}
+                                    onChange={handleChange('destino')}
+                                >
+                                    <option value=''>Selecione</option>
+                                    {aeroportos.map(item => (
+                                        <option key={item.sigla} value={item.sigla}>{item.nome}</option>
+                                    ))}
+                                </Form.Select>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="empresa">
                             <Form.Label>Empresa</Form.Label>
-                            <Form.Control 
-                            type="text" 
-                            name="empresa"
-                            value={values.empresa}
-                            onChange={handleChange('empresa')}
-                             />
+                            <Form.Select
+                                    name="empresa"
+                                    value={values.empresa}
+                                    onChange={handleChange('empresa')}
+                                >
+                                    <option value=''>Selecione</option>
+                                    {empresas.map(item => (
+                                        <option key={item.nome} value={item.nome}>{item.nome}</option>
+                                    ))}
+                                </Form.Select>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="preco">
                             <Form.Label>Preço</Form.Label>

@@ -11,7 +11,7 @@ export default function Pagina(props) {
                         <Nav.Link href="/passagem">Passagem</Nav.Link>
                         <Nav.Link href="/passageiros">Passageiros</Nav.Link>
                         <Nav.Link href="/voo">Voo</Nav.Link>
-                        <NavDropdown title="Disney" id="basic-nav-dropdown">
+                        {/* <NavDropdown title="Disney" id="basic-nav-dropdown">
                             <NavDropdown.Item href="/disney">Lista</NavDropdown.Item> 
                             <NavDropdown.Item href="/disney/cards">
                                 Cards
@@ -22,7 +22,7 @@ export default function Pagina(props) {
                             <NavDropdown.Item href="/disney/tabela">
                                 Tabela
                             </NavDropdown.Item>
-                        </NavDropdown>
+                        </NavDropdown> */}
                     </Nav>
                 </Container>
             </Navbar>
