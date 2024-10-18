@@ -2,7 +2,7 @@
 
 import Pagina from "@/app/components/Pagina"
 import apiLocalidade from "@/app/service/apiLocalidade";
-import EmpresaValidator from "@/validators/EmpresaValidator";
+import AeroportoValidator from "@/validators/AeroportoValidator";
 import { Formik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -61,12 +61,14 @@ export default function Page({ params }) {
         <Pagina titulo="Aeroporto">
             <Formik
                 initialValues={aeroporto}
+                validationSchema={AeroportoValidator}
                 onSubmit={values => salvar(values)}
             >
                 {({
                     values,
                     handleChange,
                     handleSubmit,
+                    errors
                 }) => {
 
                     useEffect(() => {
@@ -95,7 +97,11 @@ export default function Page({ params }) {
                                     name="nome"
                                     value={values.nome}
                                     onChange={handleChange('nome')} // Atualiza os valores diretamente
-                                />
+                                    isInvalid={errors.nome}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.nome}
+                                    </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="sigla">
                                 <Form.Label>Sigla</Form.Label>
@@ -104,7 +110,11 @@ export default function Page({ params }) {
                                     name="sigla"
                                     value={values.sigla}
                                     onChange={handleChange('sigla')}
-                                />
+                                    isInvalid={errors.sigla}
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.sigla}
+                                    </Form.Control.Feedback>
                             </Form.Group>
                             {camposBrasil &&
                                 <>
@@ -114,6 +124,7 @@ export default function Page({ params }) {
                                             name="uf"
                                             value={values.uf}
                                             onChange={handleChange('uf')}
+                                            
                                         >
                                             <option value=''>Selecione</option>
                                             {ufs.map(item => (
