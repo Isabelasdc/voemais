@@ -2,6 +2,7 @@
 
 import Pagina from "@/app/components/Pagina"
 import apiLocalidade from "@/app/service/apiLocalidade";
+import EmpresaValidator from "@/validators/EmpresaValidator";
 import { Formik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,6 +11,7 @@ import { Button, Form } from "react-bootstrap"
 import { FaCheck } from "react-icons/fa";
 import { MdArrowBack } from "react-icons/md";
 import { v4 } from 'uuid';
+import * as Yup from 'yup';
 
 export default function Page({ params }) {
 
