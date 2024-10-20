@@ -1,6 +1,7 @@
 'use client'
 
 import Pagina from "@/app/components/Pagina"
+import PassageirosValidator from "@/validators/PassageirosValidator";
 import { Formik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -39,12 +40,14 @@ export default function Page({ params }) {
         <Pagina titulo="Passageiros">
             <Formik
                 initialValues={passageiro}
+                validationSchema={PassageirosValidator}
                 onSubmit={values => salvar(values)}
             >
                 {({
                     values,
                     handleChange,
                     handleSubmit,
+                    errors
                 }) => (
                     <Form>
                         <Form.Group className="mb-3" controlId="nome">
@@ -54,7 +57,11 @@ export default function Page({ params }) {
                             name="nome"
                             value={values.nome}
                             onChange={handleChange('nome')}
-                             />
+                            isInvalid={errors.nome}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.nome}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="tipo">
                             <Form.Label>Tipo de Documento</Form.Label>
@@ -63,7 +70,11 @@ export default function Page({ params }) {
                             name="tipo"
                             value={values.tipo}
                             onChange={handleChange('tipo')}
-                             />
+                            isInvalid={errors.tipo}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.tipo}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="documento">
                             <Form.Label>Documento</Form.Label>
@@ -72,7 +83,11 @@ export default function Page({ params }) {
                             name="documento"
                             value={values.documento}
                             onChange={handleChange('documento')}
-                             />
+                            isInvalid={errors.documento}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.documento}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="email">
                             <Form.Label>Email</Form.Label>
@@ -81,7 +96,11 @@ export default function Page({ params }) {
                             name="email"
                             value={values.email}
                             onChange={handleChange('email')}
-                             />
+                            isInvalid={errors.email}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.email}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="telefone">
                             <Form.Label>Telefone</Form.Label>
@@ -90,7 +109,11 @@ export default function Page({ params }) {
                             name="telefone"
                             value={values.telefone}
                             onChange={handleChange('telefone')}
-                             />
+                            isInvalid={errors.telefone}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.telefone}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="nascimento">
                             <Form.Label>Nascimento</Form.Label>
@@ -99,7 +122,11 @@ export default function Page({ params }) {
                             name="nascimento"
                             value={values.nascimento}
                             onChange={handleChange('nascimento')}
-                             />
+                            isInvalid={errors.nascimento}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.nascimento}
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <div className="text-center">
                             <Button onClick={handleSubmit} variant="success">
