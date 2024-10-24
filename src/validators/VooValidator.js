@@ -10,11 +10,11 @@ const VooValidator = Yup.object().shape({
         .max(10, 'O máximo de caracteres é 10')
         .required('Campo Obrigatório'),
     
-    checkin: Yup.date()  // Data de Check-in
+    checkin: Yup.string()  // Data de Check-in
         .required('Campo Obrigatório')
         .typeError('Formato de data inválido'),
 
-    embarque: Yup.date()  // Data de Embarque
+    embarque: Yup.string()  // Data de Embarque
         .required('Campo Obrigatório')
         .typeError('Formato de data inválido'),
     
@@ -29,7 +29,7 @@ const VooValidator = Yup.object().shape({
         .max(50, 'O máximo de caracteres é 50')
         .required('Campo Obrigatório'),
     
-    preco: Yup.number()  // Preço do voo
+    preco: Yup.string()  // Preço do voo
         .min(1, 'O preço deve ser maior que zero')
         .required('Campo Obrigatório'),
 });

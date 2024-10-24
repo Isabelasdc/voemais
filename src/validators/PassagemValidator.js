@@ -13,7 +13,7 @@ const PassagemValidator = Yup.object().shape({
         .min(1, 'O mínimo de caracteres é 1')
         .max(5, 'O máximo de caracteres é 5')
         .required('Campo Obrigatório'),
-    preco: Yup.number()  // Preço da passagem
+    preco: Yup.string()  // Preço da passagem
         .min(1, 'O preço deve ser maior que zero')
         .required('Campo Obrigatório'),
 });
